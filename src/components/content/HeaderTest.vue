@@ -5,13 +5,14 @@
           <div class="demo-image">
             <!-- <a href="javascript:;"><img src="../../assets/img/zylogo1.png" alt="BLOG"></a> -->
         </div>
-          <el-menu :default-active="activeIndex" class="el-menu-demo el-menu-me" mode="horizontal" 
+          <!-- <el-menu :default-active="activeIndex" class="el-menu-demo el-menu-me" mode="horizontal"  -->
+          <el-menu class="el-menu-demo el-menu-me" mode="horizontal" 
           text-color="#000"
           background-color="#fff"
           active-text-color="#409EFF">
             <el-menu-item index="1" @click="goHome"><i class="el-icon-s-home"></i>首页</el-menu-item>
             <el-menu-item index="2" @click="goCategory"> <i class="el-icon-menu"></i>活动</el-menu-item>
-            <el-menu-item index="3" @click="goAbout" ><i class="el-icon-info" ></i>关于</el-menu-item>
+            <el-menu-item index="3" @click="goAbout" ><i class="el-icon-info" ></i>创建活动</el-menu-item>
             <el-menu-item index="4" @click="goLogin" v-if="isShowLogin"><i class="el-icon-s-custom"></i>登录</el-menu-item>
             <!-- <el-menu-item index="4" v-else @click="goUser"><i class="el-icon-s-custom"></i>个人</el-menu-item> -->
             <el-submenu index="4"  v-else >
@@ -48,10 +49,10 @@ export default {
 
     },
     created () {
-      this.axios.defaults.baseURL = 'http://www.lcblog.xyz:81'
-      this.axios.defaults.withCredentials = true
+      //this.axios.defaults.baseURL = 'http://www.lcblog.xyz:81'
+      //this.axios.defaults.withCredentials = true
       //请求登录数据
-      this.axios({
+/*       this.axios({
         method:'get',
         url:'/picture'
       }).then(res => {
@@ -66,7 +67,7 @@ export default {
         }else{
           this.isShowLogin = true
         }
-      })
+      }) */
     },
     mounted () {
 
@@ -76,10 +77,10 @@ export default {
         this.$router.push('/index')
       },
       goCategory(){
-        this.$router.push('/category/0')
+        this.$router.push('/activity')
       },
       goAbout(){
-        this.$router.push('/about')
+        this.$router.push('/found')
       },
       goLogin(){
         this.$router.push('/login')

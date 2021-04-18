@@ -44,7 +44,7 @@ export default {
   height: 380px;
   position: relative;
   top: 50px;
-  left: 340px;
+  left: 320px;
   background-color: #bfa;
 
 }

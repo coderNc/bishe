@@ -15,7 +15,8 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 
 
-
+//挂载axios到vue实例上
+Vue.prototype.axios = axios
 
 Vue.config.productionTip = false
 
@@ -25,8 +26,11 @@ Vue.use(ElementUI);
 Vue.use(axios,VueAxiox);
 
 
-
-
+//设置axios的基本配置
+axios.defaults.baseURL = 'http://120.77.175.7:8081'
+//axios.defaults.headers['Content-Type'] = 'application/json'
+axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.withCredentials = true
 
 new Vue({
   el: '#app',
