@@ -1,6 +1,6 @@
 # zhiyuanzhe
 
-> A Vue.js project
+>毕设-志愿者管理系统
 
 ## Build Setup
 
