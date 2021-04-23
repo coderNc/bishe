@@ -10,7 +10,7 @@
     </div>
     <div class="content">
       <p>项目组织：{{activityItem.org_name}}</p>
-      <p>项目地址：{{activityItem.place}}</p>
+      <p>项目地址：{{activityItem.place.split(';')[0]}}</p>
       <p>项目日期：{{timestampToTime(activityItem.start_time)}} 至 {{timestampToTime(activityItem.end_time)}}</p>
       
       <p>报名人数：{{activityItem.fact_num}} | 目标人数：{{activityItem.target_num}}</p>
@@ -23,7 +23,6 @@
           v-for="(item,index) in activityItem.tag.split(',')"
           :key="index"
           :type="items[index].type"
-          
           effect="dark">
           {{ item }}
         </el-tag>
@@ -82,8 +81,9 @@ export default {
   methods: {
     timestampToTime,
     percentage1(already,total){
+      
       const result = (already / total).toFixed(2)
-      return (result * 100).toFixed(0)
+      return parseInt((result * 100).toFixed(0))
     },
   }
 }

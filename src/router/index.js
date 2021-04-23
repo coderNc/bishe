@@ -12,6 +12,7 @@ const Login = () => import('@/views/Login/Login.vue')
 const Enroll = () => import('@/views/Login/Enroll.vue')
 const test = () => import('@/components/common/other/test.vue')
 const Interface = () => import('@/components/common/other/Interface.vue')
+const maptest = () => import('@/components/common/other/maptest.vue')
 
 
 const Admin = () => import('@/views/Admin/Admin.vue')
@@ -63,6 +64,11 @@ export default new Router({
       path:'/interface',
       name:'interface',
       component:Interface
+    },
+    {
+      path:'/map',
+      name:'maptest',
+      component:maptest
     },
     {
       path:'/enroll',

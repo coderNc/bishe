@@ -32,7 +32,9 @@
               </div>
             </el-form-item>
             <el-form-item label="活动地点" hide-required-asterisk="true"> 
-              <el-input v-model="actForm.place"></el-input>
+              <!-- <el-input v-model="actForm.place"></el-input> -->
+              <el-button  @click="dialogVisible = true"> 选择地址</el-button>
+              <p>{{this.address}}</p>
             </el-form-item>
             <el-form-item label="活动类型"> 
               <el-popover
@@ -58,7 +60,7 @@
             <el-form-item label="活动联系人手机号" hide-required-asterisk="true"> 
               <el-input v-model="actForm.representative_phone"></el-input>
             </el-form-item>
-            <el-form-item label=" 组织描述" >
+            <el-form-item label=" 活动描述" >
               <el-input type="textarea" v-model="actForm.desc"></el-input>
             </el-form-item>
             <el-form-item>
@@ -82,6 +84,11 @@
         </div>
 
     </div>
+
+
+    <el-dialog title="选择地址" :visible.sync="dialogVisible" width="50%">
+      <xmap width="920px" height="500px"  @location="location" :lnglat=test :isShow=true></xmap>
+    </el-dialog>
   </div>
 </template>
 
@@ -89,13 +96,17 @@
 import HeaderTest from '../../components/content/HeaderTest.vue'
 import {timestampToTime} from '../../assets/js/tools'
 import Heder from '../../components/content/Heder.vue'
+import Xmap from '../../components/common/other/Xmap'
 export default {
   name: '',
   mixins: [],
   props: {},
-  components: {HeaderTest, Heder},
+  components: {HeaderTest, Heder,Xmap},
   data () {
     return {
+      dialogVisible: false,
+      point:[],
+      address:'',
       visible: false,
       value:'',
       orgData:{},
@@ -130,6 +141,17 @@ export default {
           this.actForm.org_id = res.data.data.org.id
         }
       })
+
+      var test = "陕西省西安市长安区韦曲街道安美公寓南区西安邮电大学长安校区(东区);108.9068,34.1547"
+      var arr = test.split(';')
+      var pointArr = arr[1].split(',')
+      console.log(arr);
+      console.log(pointArr);
+
+      //console.log(parseFloat(pointArr[0]));
+      pointArr[0] = parseFloat(pointArr[0]);
+      pointArr[1] = parseFloat(pointArr[1]);
+      console.log(pointArr);
   },
   mounted () {
 
@@ -161,7 +183,31 @@ export default {
         console.log(err);
       })
 
-    }
+    },
+    //地址处理函数
+    location(point, address) {
+      this.point = point
+      
+      //alert(`坐标：${point[0]},${point[1]} - 地址：${address}`)
+        this.$confirm('选择的地址为：' + address , '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.$message({
+            type: 'success',
+            message: '选择成功!'
+          });
+          this.address = address
+          this.dialogVisible = false
+          this.actForm.place = address + ';' + point[0] + ',' + point[1]
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '重新选择'
+          });          
+        });
+  }
   }
 }
 </script>

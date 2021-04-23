@@ -82,11 +82,21 @@
         <h2 class="orgUsername">{{actData.representative}}</h2>
         <h3>{{actData.representative_phone}}</h3>
         <h2 class="title">项目地址</h2>
-        <h2 class="orgPlace">{{actData.place}}</h2>
-        <el-button type="danger" round class="sub" icon="el-icon-edit" @click="joinAct" v-if="isJoin">报名此项目</el-button>
-        <el-button type="danger" round class="sub" icon="el-icon-edit" disabled v-else>已报名</el-button>
+          <el-tooltip class="item" effect="dark" content="点击查看详细地址" placement="right">
+          
+          <el-link type="primary" :underline="false"  @click="dialogVisible = true"><h2 class="orgPlace">{{actData.place}}</h2></el-link>
+        </el-tooltip>
+        
+        <el-button type="danger" round class="sub" icon="el-icon-edit" @click="joinAct" v-if="isJoin" v-show="!isActOk">报名此项目</el-button>
+        <el-button type="danger" round class="sub" icon="el-icon-edit" disabled v-else v-show="!isActOk">已报名</el-button>
+        <el-button type="danger" round class="sub" icon="el-icon-edit" disabled v-show="isActOk">活动已结束</el-button>
       </div>
     </div>
+
+
+    <el-dialog title="详细地址" :visible.sync="dialogVisible" width="50%">
+      <xmap width="920px" height="500px"  @location="location" :lnglat=point :isShow=false></xmap>
+    </el-dialog>
   </div>
 </template>
 
@@ -94,16 +104,18 @@
 import HeaderTest from '../../components/content/HeaderTest.vue';
 import {timestampToTime} from '../../assets/js/tools'
 import Heder from '../../components/content/Heder.vue';
+import Xmap from '../../components/common/other/Xmap'
 export default {
   name: '',
   mixins: [],
   props: {},
-  components: {HeaderTest,Heder},
+  components: {HeaderTest,Heder,Xmap},
   data () {
     return {
       isJoin:true,
       activeName: 'first',
       isAlready:true,
+      isActOk:false,
         id:'',
         actData:{},
         orgData:{},
@@ -115,6 +127,9 @@ export default {
           { type: 'danger' },
           { type: 'warning'}
         ],
+      dialogVisible: false,
+      point:[],
+      address:'',
     }
   },
   watch: {
@@ -158,11 +173,16 @@ export default {
           id:this.id
         })
       }).then(res => {
-        //console.log(res);
+        console.log(res);
         if(res.status == 200 && res.data.data.res_status.code == 10000){
           this.actData = res.data.data.activity
+          let arr = res.data.data.activity.place.split(';')
+          //console.log(arr);
+          this.actData.place = arr[0]
+          this.point = arr[1].split(',')
           if(res.data.data.activity.fact_num == res.data.data.activity.target_num){
             this.isAlready = false
+            this.isActOk = true
           }
           this.actUsersData = res.data.data.user
           //根据id获取组织信息 
@@ -266,6 +286,8 @@ export default {
 }
 .orgPlace{
   color: #67C23A;
+  width: 180px;
+  margin-right: 0;
 }
 .orgUsername{
   color: #e60012;

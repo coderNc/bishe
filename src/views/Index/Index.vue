@@ -47,7 +47,7 @@ export default {
 
     },
     mounted () {
-    this.$refs.header.activeIndex = '1'
+    //this.$refs.header.activeIndex = '1'
     },
     methods: {
 

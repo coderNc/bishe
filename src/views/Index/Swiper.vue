@@ -2,7 +2,7 @@
   <div id="swiperBox">
     <div class="block">
       <el-carousel trigger="click" height="380px">
-        <el-carousel-item v-for="item in imgList" :key="item">
+        <el-carousel-item v-for="(item,index) in imgList" :key="index">
           <img :src=item.imgUrl>
           <!-- <img src="@/assets/img/banner.png"> -->
           <h3>{{item.txt}}</h3>
