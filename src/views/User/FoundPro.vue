@@ -131,6 +131,7 @@ export default {
 
   },
   created () {
+    
       this.axios({
         method:'POST',
         url:'/org/login-org',

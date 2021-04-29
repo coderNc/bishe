@@ -27,16 +27,17 @@
         </div>
         <el-divider></el-divider>
         <div class="actInfo">
-          <div class="left">
-            <p class="info">项目地点：{{actData.place}}</p>
-            <p class="info">项目开始日期：{{timestampToTime(actData.start_time)}}</p>
-            <p class="info">需求人数：{{actData.target_num}}</p>
-          </div>
           <div class="right">
-          <p class="info">发布日期：2021/4/4</p>
-          <p class="info">项目结束日期：{{timestampToTime(actData.end_time)}}</p>
-          <p class="info">报名人数：{{actData.fact_num}}</p>
+          <p >发布日期：2021/4/4</p>
+          <p >项目结束日期：{{timestampToTime(actData.end_time)}}</p>
+          <p >报名人数：{{actData.fact_num}}</p>
           </div>
+          <div class="left">
+            <p >项目地点：{{actData.place}}</p>
+            <p >项目开始日期：{{timestampToTime(actData.start_time)}}</p>
+            <p >需求人数：{{actData.target_num}}</p>
+          </div>
+
         </div>
         <div class="fenge">
           <el-divider></el-divider>
@@ -173,18 +174,16 @@ export default {
           id:this.id
         })
       }).then(res => {
-        console.log(res);
+        //console.log(res);
         if(res.status == 200 && res.data.data.res_status.code == 10000){
+          this.actUsersData = res.data.data.user
           this.actData = res.data.data.activity
-          let arr = res.data.data.activity.place.split(';')
-          //console.log(arr);
-          this.actData.place = arr[0]
-          this.point = arr[1].split(',')
+
           if(res.data.data.activity.fact_num == res.data.data.activity.target_num){
             this.isAlready = false
             this.isActOk = true
           }
-          this.actUsersData = res.data.data.user
+
           //根据id获取组织信息 
           this.axios({
             method:'POST',
@@ -193,11 +192,16 @@ export default {
               id:res.data.data.activity.org_id
             })
           }).then(res => {
-            //console.log(res);
+            console.log(res);
             if(res.status == 200 && res.data.data.res_status.code == 10000){
-                this.orgData = res.data.data.org
+              this.orgData = res.data.data.org
             }
           })
+
+                    //将地址拆分为地址和经纬度
+                    let arr = res.data.data.activity.place.split(';')
+          this.actData.place = arr[0]
+          this.point = arr[1].split(',')
         }
       }).catch(err => {
         console.log(err);
@@ -346,7 +350,7 @@ h2,h3{
 .proInfo{
   width: 740px;
   height: 100%;
-  background-color: #ff0;
+  /* background-color: #ff0; */
   position: relative;
 }
 .img{
@@ -379,17 +383,20 @@ h2,h3{
 }
 .actInfo{
   width: 100%;
+  height: 120px;
   position: absolute;
   top: 250px;
-  display: flex;
+  /* display: flex; */
 }
 .left{
   width: 50%;
   margin: 0 20px ;
+  height: 120px;
 }
 .right{
   width: 50%;
-  margin: 0 20px;
+  float: right;
+  height: 120px;
 }
 .fenge .el-divider{
   position: absolute;
