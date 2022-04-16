@@ -5,55 +5,50 @@
         <span>热门志愿项目 <i class="iconfont icon-hot"></i></span>
       </div>
       <div class="text item">
-          <el-link
-            :underline="false"
-            class="ellink"
-            v-for="(item, index) in actsData"
-            :key="index"
-            :href="'/#/detail/' + item.id" 
-            ><i>{{ index + 1 }} </i>
-            {{ item.title }}
-            <span class="update">{{timestampToTime(item.create_time * 1000)}}</span>
-            </el-link>
+        <el-link
+          :underline="false"
+          class="ellink"
+          v-for="(item, index) in actsData"
+          :key="index"
+          :href="'/#/detail/' + item.id"
+          ><i>{{ index + 1 }} </i>
+          {{ item.title }}
+          <span class="update">{{
+            timestampToTime(item.create_time * 1000)
+          }}</span>
+        </el-link>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
-import {timestampToTime} from '@/assets/js/tools.js'
+import { timestampToTime } from "@/assets/js/tools.js";
+import { getActivities } from "@/services/activity";
+
 export default {
-  name: "",
-  mixins: [],
-  props: {},
+  name: "AsideHots",
   components: {},
   data() {
     return {
-      actsData:[]
+      actsData: []
     };
   },
-  watch: {},
-  computed: {},
   created() {
-      this.axios({
-        method:'POST',
-        url:'/activities',
-        data:JSON.stringify({
-          limit:1000,
-          offset:0,
-          cur_page:0
-        })
-      }).then(res => {
-        console.log(res);
-        if(res.status == 200 && res.data.data.res_status.code == 10000){
-          this.actsData = res.data.data.activity
-        }
-      }) 
+    getActivities({
+      limit: 1000,
+      offset: 0,
+      cur_page: 0
+    }).then(res => {
+      // console.log(res);
+      if (res.status == 200 && res.data.data.res_status.code == 10000) {
+        this.actsData = res.data.data.activity;
+      }
+    });
   },
-  mounted() {},
   methods: {
     timestampToTime
-  },
+  }
 };
 </script>
 

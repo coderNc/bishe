@@ -1,33 +1,29 @@
 <template>
   <div id="bannerImg">
-    <img src="../../assets/img/banner.gif" alt="banner">
+    <img src="../../assets/img/banner.gif" alt="banner" />
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
-  mixins: [],
-  props: {},
   components: {},
-  data () {
-    return {
-    }
+  data() {
+    return {};
   }
-}
+};
 </script>
 
 <style scoped>
-#bannerImg{
+#bannerImg {
   width: 1920px;
   height: 500px;
   position: relative;
   /* top: -60px; */
   z-index: 1;
 }
-img{
+img {
   width: 100%;
   height: 100%;
-  opacity: .8;
+  opacity: 0.8;
 }
 </style>

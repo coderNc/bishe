@@ -1,8 +1,41 @@
-/*
- * @Author: your name
- * @Date: 2022-04-15 14:00:06
- * @LastEditTime: 2022-04-15 14:00:06
- * @LastEditors: Please set LastEditors
- * @Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- * @FilePath: /bishe/src/services/login.js
- */
+import api from "./api";
+
+// 志愿者登录
+export const volLogin = (userName, password) => {
+  return api.post({
+    url: `/user/login`,
+    data: {
+      user_name: userName,
+      password
+    }
+  });
+};
+
+// 志愿者退出登录
+export const volUnLogin = id => {
+  return api.post({
+    url: `/user/un-login`,
+    data: {
+      id
+    }
+  });
+};
+
+// 组织登录
+export const orgLogin = (data) => {
+  return api.post({
+    url: `/org/login`,
+    data,
+  });
+};
+
+// 组织退出登录
+export const orgUnLogin = id => {
+  return api.post({
+    url: `/org/un-login`,
+    data: {
+      id
+    }
+  });
+};
+

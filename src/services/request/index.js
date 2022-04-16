@@ -1,8 +1,4 @@
-/**
- * by nc
- * coderWhy
- */
-import axios  from "axios";
+import axios from "axios";
 
 class Request {
   instance;
@@ -29,13 +25,10 @@ class Request {
     return new Promise((resolve, reject) => {
       this.instance
         .request(config)
-        .then((res) => {
-          if (config.interceptors.responseInterceptor) {
-            res = config.interceptors.responseInterceptor(res);
-          }
+        .then(res => {
           resolve(res);
         })
-        .catch((err) => {
+        .catch(err => {
           reject(err);
           return err;
         });

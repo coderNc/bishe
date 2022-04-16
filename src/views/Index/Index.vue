@@ -1,32 +1,25 @@
 <template>
   <div>
-    <!-- <header-test ref="header"></header-test> -->
-    <heder></heder>
-    <banner></banner>
-    <swiper></swiper>
-    <aside-index></aside-index>
+    <heder />
+    <banner />
+    <swiper />
+    <aside-index />
     <div class="activityContainer">
-      <activity-container></activity-container>
+      <activity-container />
     </div>
   </div>
 </template>
 
 <script>
-import HeaderTest from "@/components/content/HeaderTest.vue";
 import Banner from "@/views/Index/Banner.vue";
 import Swiper from "../Index/Swiper.vue";
 import AsideIndex from "../Index/Aside/AsideIndex.vue";
 import ActivityContainer from "../Index/ActivityContainer.vue";
 import Heder from "../../components/content/Heder.vue";
 
-import { test } from "../../services/index";
-
 export default {
-  name: "",
-  mixins: [],
-  props: {},
+  name: "Index",
   components: {
-    HeaderTest,
     Banner,
     Swiper,
     AsideIndex,
@@ -36,20 +29,11 @@ export default {
   data() {
     return {};
   },
-  watch: {},
-  computed: {},
-  created() {
-    this.init();
-  },
+  created() {},
   mounted() {
     //this.$refs.header.activeIndex = '1'
   },
-  methods: {
-   init: async function () {
-      const res = await test(1);
-      console.log(res);
-    }
-  }
+  methods: {}
 };
 </script>
 

@@ -1,44 +1,32 @@
 <template>
   <div class="asideWrapper">
-    <aside-news></aside-news>
-    <aside-hots></aside-hots>
+    <aside-news />
+    <aside-hots />
   </div>
 </template>
 
 <script>
-import AsideNews from '../aside/AsideNews.vue'
-import AsideHots from './AsideHots'
+import AsideNews from './AsideNews.vue';
+import AsideHots from "./AsideHots.vue";
 
 export default {
-  name: '',
+  name: "",
   mixins: [],
   props: {},
-  components: {AsideNews, AsideHots},
-  data () {
-    return {
-
-    }
+  components: { AsideNews, AsideHots },
+  data() {
+    return {};
   },
-  watch: {
-
-  },
-  computed: {
-
-  },
-  created () {
-
-  },
-  mounted () {
-
-  },
-  methods: {
-
-  }
-}
+  watch: {},
+  computed: {},
+  created() {},
+  mounted() {},
+  methods: {}
+};
 </script>
 
 <style scoped>
-.asideWrapper{
+.asideWrapper {
   width: 400px;
   position: absolute;
   right: 320px;

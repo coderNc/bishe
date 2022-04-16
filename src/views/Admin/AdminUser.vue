@@ -57,9 +57,8 @@
       >
       </el-pagination>
     </div>
-      <el-dialog title="添加用户" :visible.sync="dialogVisible" width="30%">
+    <el-dialog title="添加用户" :visible.sync="dialogVisible" width="30%">
       <el-form ref="form" :model="volForm" :rules="rules" label-width="80px">
-
         <el-form-item label="用户名" prop="user_name">
           <el-input
             v-model="volForm.user_name"
@@ -113,11 +112,10 @@
 </template>
 
 <script>
+import { getUserList, delUserById, userRegister } from "@/services/user";
+
 export default {
   name: "",
-  mixins: [],
-  props: {},
-  components: {},
   data() {
     return {
       usersData: [],
@@ -129,7 +127,7 @@ export default {
         name: "",
         gender: "",
         user_type: "",
-        age: "",
+        age: ""
       },
       rules: {
         username: [
@@ -138,8 +136,8 @@ export default {
             min: 1,
             max: 15,
             message: "长度在 1 到 15 个字符",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         password: [
           { required: true, message: "请输入密码", trigger: "blur" },
@@ -147,8 +145,8 @@ export default {
             min: 6,
             max: 15,
             message: "长度在 6 到 15 个字符",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
         telephone: [
           { required: true, message: "请输入手机号", trigger: "blur" },
@@ -156,89 +154,75 @@ export default {
             min: 11,
             max: 11,
             message: "请输入正确的手机号！",
-            trigger: "blur",
-          },
+            trigger: "blur"
+          }
         ],
-        level: [{ required: true, message: "请选用户角色", trigger: "change" }],
+        level: [{ required: true, message: "请选用户角色", trigger: "change" }]
       },
       currentPage: 1, //当前页
-      total: 100, //总数
+      total: 10, //总数
       pageSize: 5, //每页展示个数
       limit: 5,
-      offset: 0,
+      offset: 0
     };
   },
-  watch: {},
-  computed: {},
   created() {
     //请求用户列表
-      this.axios({
-        method:'POST',
-        url:'/users',
-        data:JSON.stringify({
-          limit:1000,
-          offset:0,
-          cur_page:0
-        })
-        }).then(res => {
-          console.log(res);
-          if(res.status == 200 && res.data.data.res_status.code == 10000){
-            this.usersData = res.data.data.users
-          }
-        }).catch(err => {
-          console.log(err);
+    getUserList({
+      limit: 1000,
+      offset: 0,
+      cur_page: 0
+    })
+      .then(res => {
+        console.log(res);
+        if (res.status == 200 && res.data.data.res_status.code == 10000) {
+          this.usersData = res.data.data.users;
+        }
       })
+      .catch(err => {
+        console.log(err);
+      });
   },
-  mounted() {},
   methods: {
     deleteUser(id) {
-      console.log(id);
+      // console.log(id);
       this.$confirm("此操作将删除该用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
-        type: "warning",
+        type: "warning"
       })
         .then(() => {
           //调用删除用户接口
-          this.axios({
-            method:'POST',
-            url:'/user/delete',
-            data: JSON.stringify({
-              id: id,
-            }),
-          }).then((res) => {
-            console.log(res);
-            if(res.status == 200 && res.data.data.res_status.code == 10000){
+          delUserById({ id }).then(res => {
+            // console.log(res);
+            if (res.status == 200 && res.data.data.res_status.code == 10000) {
               this.$message({
                 type: "success",
-                message: "删除成功!",
+                message: "删除成功!"
               });
               location.reload();
-            }else{
-              this.$message.error(res.data.data.res_status.msg)
+            } else {
+              this.$message.error(res.data.data.res_status.msg);
             }
           });
         })
         .catch(() => {
           this.$message({
             type: "info",
-            message: "已取消删除",
+            message: "已取消删除"
           });
         });
     },
+
     addVol() {
-      console.log(JSON.stringify(this.volForm));
-      //请求添加用户
-      this.axios({
-        method:'POST',
-        url:'/user/register',
-        data: JSON.stringify(this.volForm),
-      }).then((res) => {
+      // console.log(JSON.stringify(this.volForm));
+      // //请求添加用户
+      userRegister({ ...this.volForm }).then(res => {
         //console.log(res);
-        if(res.status == 200 && res.data.data.res_status.code == 10000){
+        if (res.status == 200 && res.data.data.res_status.code == 10000) {
           this.$message({
             type: "success",
-            message: "添加成功!",
+            message: "添加成功!"
           });
           location.reload();
         } else {
@@ -246,44 +230,37 @@ export default {
         }
       });
     },
+
     handleCurrentChange(pages) {
       //console.log(pages);
       this.offset = (pages - 1) * this.limit;
       //console.log(this.offset);
-      this.axios({
-      method: "POST",
-      url: "/users",
-      data: JSON.stringify({
+      getUserList({
         offset: this.offset,
         limit: this.limit,
-        cur_page: 0,
-      }),
-      }).then((res) => {
+        cur_page: 0
+      }).then(res => {
         //console.log(res);
         if (res.status == 200 && res.data.code == 10000) {
-          this.usersData = res.data.data.users
+          this.usersData = res.data.data.users;
         }
       });
     },
     handleSizeChange(pagesize) {
       //console.log(pagesize);
       this.pageSize = this.limit = pagesize;
-      this.axios({
-      method: "POST",
-      url: "/users",
-      data: JSON.stringify({
+      getUserList({
         offset: this.offset,
         limit: this.limit,
-        cur_page: 0,
-      }),
-      }).then((res) => {
+        cur_page: 0
+      }).then(res => {
         //console.log(res);
         if (res.status == 200 && res.data.code == 10000) {
-          this.usersData = res.data.data.users
+          this.usersData = res.data.data.users;
         }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

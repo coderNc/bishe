@@ -2,10 +2,9 @@
   <div id="swiperBox">
     <div class="block">
       <el-carousel trigger="click" height="380px">
-        <el-carousel-item v-for="(item,index) in imgList" :key="index">
-          <img :src=item.imgUrl>
-          <!-- <img src="@/assets/img/banner.png"> -->
-          <h3>{{item.txt}}</h3>
+        <el-carousel-item v-for="(item, index) in imgList" :key="index">
+          <img :src="item.imgUrl" />
+          <h3>{{ item.txt }}</h3>
         </el-carousel-item>
       </el-carousel>
     </div>
@@ -20,33 +19,34 @@ export default {
   components: {},
   data() {
     return {
-      imgList:[
-        {imgUrl:require("../../assets/img/banner.png"),txt:"西邮志愿者测试网站上线啦！"},
-        {imgUrl:require("../../assets/img/swiper1.png"),txt:"测试1"},
-        {imgUrl:require("../../assets/img/swiper2.png"),txt:"测试2"},
-        {imgUrl:require("../../assets/img/swiper3.png"),txt:"测试3"},
-        {imgUrl:require("../../assets/img/swiper4.png"),txt:"测试4"},
-        ]
+      imgList: [
+        {
+          imgUrl: require("../../assets/img/banner.png"),
+          txt: "志愿者测试网站上线啦！"
+        },
+        { imgUrl: require("../../assets/img/swiper1.png"), txt: "测试1" },
+        { imgUrl: require("../../assets/img/swiper2.png"), txt: "测试2" },
+        { imgUrl: require("../../assets/img/swiper3.png"), txt: "测试3" },
+        { imgUrl: require("../../assets/img/swiper4.png"), txt: "测试4" }
+      ]
     };
   },
   watch: {},
   computed: {},
   created() {},
   mounted() {},
-  methods: {},
+  methods: {}
 };
 </script>
 
 <style scoped>
-
-.block{
+.block {
   width: 820px;
   height: 380px;
   position: relative;
   top: 50px;
   left: 320px;
   background-color: #bfa;
-
 }
 .el-carousel__item h3 {
   width: 300px;
@@ -62,7 +62,7 @@ export default {
   line-height: 50px;
   margin: 0;
 }
-.el-carousel__item img{
+.el-carousel__item img {
   width: 100%;
 }
 .el-carousel__item:nth-child(2n) {

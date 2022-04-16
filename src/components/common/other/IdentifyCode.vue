@@ -144,7 +144,11 @@
     //初始生成验证码
     mounted () {
       this.drawPic()
-    }
+    },
+    // created() {
+    //   this.drawPic()
+    // }
+    
   }
 </script>
 <style scoped >

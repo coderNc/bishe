@@ -1,9 +1,9 @@
 import Request from "./request/index";
-import { BASE_URL, TIMEOUT } from './config';
+import { BASE_URL, TIMEOUT, mockBaseURL } from './config';
 import { Message } from 'element-ui';
 
 export default new Request({
-  baseURL: BASE_URL,
+  baseURL: mockBaseURL,
   timeout: TIMEOUT,
   // withCredentials: true
   headers: {
@@ -23,7 +23,7 @@ export const checkContentType = (config) => {
 
 export const checkCode = (res) => {
   if (res.status === 200) {
-    if (res.data && res.data.code) {
+    if (res.data) {
       return res.data
     }
     return Promise.reject(res)
