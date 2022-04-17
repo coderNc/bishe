@@ -168,43 +168,43 @@ export default {
   },
   created() {
     //请求用户列表
-    getUserList({
-      limit: 1000,
-      offset: 0,
-      cur_page: 0
-    })
-      .then(res => {
-        console.log(res);
-        if (res.status == 200 && res.data.data.res_status.code == 10000) {
-          this.usersData = res.data.data.users;
-        }
-      })
-      .catch(err => {
-        console.log(err);
-      });
+    this.initUserList();
   },
   methods: {
+    async initUserList(isInit = false) {
+      if(isInit) {
+        this.offset = 0;
+        this.currentPage = 1;
+      }
+      const res = await getUserList({
+        offset: this.offset,
+        limit: this.limit,
+        cur_page: 0
+      });
+      if (res.data.res_status.code == 10000) {
+        this.usersData = res.data.users;
+        this.total = res.data.total_user_num;
+      }
+    },
+
     deleteUser(id) {
-      // console.log(id);
       this.$confirm("此操作将删除该用户, 是否继续?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       })
-        .then(() => {
+        .then(async () => {
           //调用删除用户接口
-          delUserById({ id }).then(res => {
-            // console.log(res);
-            if (res.status == 200 && res.data.data.res_status.code == 10000) {
-              this.$message({
-                type: "success",
-                message: "删除成功!"
-              });
-              location.reload();
-            } else {
-              this.$message.error(res.data.data.res_status.msg);
-            }
-          });
+          const res = await delUserById({ id });
+          if (res.data.res_status.code == 10000) {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+            this.initUserList(true);
+          } else {
+            this.$message.error(res.data.res_status.msg);
+          }
         })
         .catch(() => {
           this.$message({
@@ -214,51 +214,28 @@ export default {
         });
     },
 
-    addVol() {
-      // console.log(JSON.stringify(this.volForm));
+    async addVol() {
       // //请求添加用户
-      userRegister({ ...this.volForm }).then(res => {
-        //console.log(res);
-        if (res.status == 200 && res.data.data.res_status.code == 10000) {
-          this.$message({
-            type: "success",
-            message: "添加成功!"
-          });
-          location.reload();
-        } else {
-          this.$message.error(res.data.data.res_status.msg + "!请重新输入!");
-        }
-      });
+      const res = await userRegister({ ...this.volForm });
+      if (res.data.res_status.code == 10000) {
+        this.$message({
+          type: "success",
+          message: "添加成功!"
+        });
+        this.dialogVisible = false;
+        this.initUserList();
+      } else {
+        this.$message.error(res.data.res_status.msg + "!请重新输入!");
+      }
     },
 
     handleCurrentChange(pages) {
-      //console.log(pages);
       this.offset = (pages - 1) * this.limit;
-      //console.log(this.offset);
-      getUserList({
-        offset: this.offset,
-        limit: this.limit,
-        cur_page: 0
-      }).then(res => {
-        //console.log(res);
-        if (res.status == 200 && res.data.code == 10000) {
-          this.usersData = res.data.data.users;
-        }
-      });
+      this.initUserList();
     },
     handleSizeChange(pagesize) {
-      //console.log(pagesize);
       this.pageSize = this.limit = pagesize;
-      getUserList({
-        offset: this.offset,
-        limit: this.limit,
-        cur_page: 0
-      }).then(res => {
-        //console.log(res);
-        if (res.status == 200 && res.data.code == 10000) {
-          this.usersData = res.data.data.users;
-        }
-      });
+      this.initUserList();
     }
   }
 };

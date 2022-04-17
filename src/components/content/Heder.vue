@@ -70,12 +70,11 @@ export default {
     //请求个人信息
     getUserInfo()
       .then(res => {
-        //console.log(res);
-        if (res.status == 200 && res.data.data.res_status.code == 10000) {
-          this.volData = res.data.data.user_info;
+        if (res.data.res_status.code == 10000) {
+          this.volData = res.data.user_info;
           this.isShowVol = true;
           this.isLogin = false;
-          if (res.data.data.user_info.user_type == 1) {
+          if (res.data.user_info.user_type == 1) {
             this.isShowgoback = true;
           }
         }
@@ -87,8 +86,8 @@ export default {
     getOrgInfo()
       .then(res => {
         //console.log(res);
-        if (res.status == 200 && res.data.data.res_status.code == 10000) {
-          this.orgData = res.data.data.org;
+        if (res.data.res_status.code == 10000) {
+          this.orgData = res.data.org;
           this.isShowOrg = true;
           this.isLogin = false;
         }
@@ -124,7 +123,7 @@ export default {
           //调用志愿者退出登录
           volUnLogin(this.volData.id).then(res => {
             console.log(res);
-            if (res.status == 200 && res.data.data.res_status.code == 10000) {
+            if (res.data.res_status.code == 10000) {
               this.$notify({
                 title: "成功",
                 message: "退出成功！",
@@ -156,7 +155,7 @@ export default {
           //调用志愿者退出登录
           orgUnLogin(this.orgData.id).then(res => {
             //console.log(res);
-            if (res.status == 200 && res.data.data.res_status.code == 10000) {
+            if (res.data.res_status.code == 10000) {
               this.$notify({
                 title: "成功",
                 message: "退出成功！",

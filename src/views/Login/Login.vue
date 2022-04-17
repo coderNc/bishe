@@ -229,21 +229,20 @@ export default {
               this.volunteerForm.user_name,
               this.volunteerForm.password
             ).then(res => {
-              // console.log(res);
-              if (res.status == 200 && res.data.data.res_status.code == 10000) {
+              if (res.data.res_status.code == 10000) {
                 this.$message({
                   message: "登录成功",
                   type: "success"
                 });
                 //跳转到对应的界面
-                if (res.data.data.user.user_type == 1) {
+                if (res.data.user.user_type == 1) {
                   this.$router.push("/admin/index");
                 } else {
                   this.$router.push("/index");
                 }
-              } else if (res.data.data.res_status.code == 20001) {
+              } else if (res.data.res_status.code == 20001) {
                 this.$message.error("账号或密码错误！");
-              } else if (res.data.data.res_status.code == 20003) {
+              } else if (res.data.res_status.code == 20003) {
                 this.$message.error("用户已登录，请勿重复登录！");
               }
             });
@@ -270,15 +269,15 @@ export default {
               org_password: this.orgForm.org_password
             }).then(res => {
               // console.log(res);
-              if (res.status == 200 && res.data.data.res_status.code == 10000) {
+              if (res.data.res_status.code == 10000) {
                 this.$message({
                   message: "登录成功",
                   type: "success"
                 });
                 this.$router.push("/index");
-              } else if (res.data.data.res_status.code == 30002) {
+              } else if (res.data.res_status.code == 30002) {
                 this.$message.error("账号或密码错误！");
-              } else if (res.data.data.res_status.code == 30003) {
+              } else if (res.data.res_status.code == 30003) {
                 this.$message.error("组织用户已登录，请勿重复登录！");
               }
             });
