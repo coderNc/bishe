@@ -3,9 +3,9 @@ import { BASE_URL, TIMEOUT, mockBaseURL } from './config';
 import { Message } from 'element-ui';
 
 export default new Request({
-  baseURL: mockBaseURL,
+  baseURL: BASE_URL,
   timeout: TIMEOUT,
-  // withCredentials: true
+  withCredentials: true,
   headers: {
     'Content-Type': 'application/json; charset=utf-8'
   },

@@ -28,7 +28,7 @@ export const userJoinActivity = data => {
 // 用户取消活动报名
 export const userUnJoinActivity = data => {
   return api.post({
-    url: ` /user/un-activity`,
+    url: `/user/un-activity`,
     data
   });
 };
@@ -36,7 +36,7 @@ export const userUnJoinActivity = data => {
 // 分页获取用户可报名活动
 export const getActivities = data => {
   return api.post({
-    url: ` /activities`,
+    url: `/activities`,
     data
   });
 };
@@ -44,7 +44,7 @@ export const getActivities = data => {
 // 获取活动详细信息及用户报名信息
 export const getActivityAndUser = data => {
   return api.post({
-    url: ` /activity/user`,
+    url: `/activity/user`,
     data
   });
 };
