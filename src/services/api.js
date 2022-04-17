@@ -7,7 +7,8 @@ export default new Request({
   timeout: TIMEOUT,
   withCredentials: true,
   headers: {
-    'Content-Type': 'application/json; charset=utf-8'
+    // 'Content-Type': 'application/json; charset=UTF-8;'
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8;'
   },
   interceptors: {
     requestInterceptor: (config) => checkContentType(config),

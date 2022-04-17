@@ -34,7 +34,8 @@ VueAMap.initAMapApiLoader({
 }); */
 
 //设置axios的基本配置
-axios.defaults.baseURL = 'http://120.77.175.7:8081'
+// axios.defaults.baseURL = 'http://120.77.175.7:8081'
+axios.defaults.baseURL = 'http://8.142.14.216:8081'
 //axios.defaults.headers['Content-Type'] = 'application/json'
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 axios.defaults.withCredentials = true
